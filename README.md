@@ -1,0 +1,1 @@
+Test assignment for the position of Frontend Developer from the Qencode company
