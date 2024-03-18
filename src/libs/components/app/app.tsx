@@ -1,5 +1,7 @@
+import { Auth } from "~/pages/auth/auth.tsx";
+
 function App() {
-  return <div></div>;
+  return <Auth> </Auth>;
 }
 
 export { App };
