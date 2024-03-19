@@ -1,7 +1,11 @@
-import { AuthLayout } from "./libs/components/components.ts";
+import { AuthLayout, LoginForm } from "./libs/components/components.ts";
 
 function Auth() {
-  return <AuthLayout> </AuthLayout>;
+  return (
+    <AuthLayout>
+      <LoginForm />
+    </AuthLayout>
+  );
 }
 
 export { Auth };
