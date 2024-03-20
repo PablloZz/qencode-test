@@ -57,7 +57,9 @@ function LoginForm() {
       >
         Forgot your password?
       </NavLink>
-      <button className={styles["log-in-button"]}>Log in to Qencode</button>
+      <button type="button" className={styles["log-in-button"]}>
+        Log in to Qencode
+      </button>
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?
         <NavLink to={AppRoute.SIGN_UP} className={styles["sign-up-link"]}>
