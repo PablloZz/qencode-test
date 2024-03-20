@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-import { Input } from "~/libs/components/components.ts";
+import { Button, Input } from "~/libs/components/components.ts";
 
 function ForgotPassword() {
   return (
@@ -15,12 +15,13 @@ function ForgotPassword() {
         labelText="Email"
         wrapperClassName={styles["email-wrapper"]}
       />
-      <button type="button" className={styles["send-button"]}>
-        Send
-      </button>
-      <button type="button" className={styles["cancel-button"]}>
-        Cancel
-      </button>
+      <Button
+        label="Send"
+        type="button"
+        className={styles["send-button"]}
+        variant="primary"
+      />
+      <Button label="Send" type="button" variant="outlined" />
     </>
   );
 }

@@ -3,7 +3,7 @@ import gitHubIcon from "~/assets/images/github-icon.svg";
 import styles from "./styles.module.css";
 import { NavLink } from "react-router-dom";
 import { AppRoute } from "~/libs/enums/enums.ts";
-import { Input, PasswordInput } from "~/libs/components/components.ts";
+import { Button, Input, PasswordInput } from "~/libs/components/components.ts";
 
 function LoginForm() {
   return (
@@ -57,9 +57,12 @@ function LoginForm() {
       >
         Forgot your password?
       </NavLink>
-      <button type="button" className={styles["log-in-button"]}>
-        Log in to Qencode
-      </button>
+      <Button
+        label="Log in to Qencode"
+        type="button"
+        className={styles["login-button"]}
+        variant="primary"
+      />
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?
         <NavLink to={AppRoute.SIGN_UP} className={styles["sign-up-link"]}>

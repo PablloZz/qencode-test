@@ -18,7 +18,7 @@
   border: 1.2px solid var(--red);
 }
 
-.errorMessage {
+.error-message {
   font-family: "Basis Grotesque Pro", Verdana, sans-serif;
   font-weight: 400;
   font-size: 15px;

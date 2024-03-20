@@ -46,7 +46,7 @@ function Input({
         type={type}
         required={required}
       />
-      <span className={styles.errorMessage}>{hasError && error}</span>
+      <span className={styles["error-message"]}>{hasError && error}</span>
     </label>
   );
 }
