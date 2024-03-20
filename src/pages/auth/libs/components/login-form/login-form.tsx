@@ -7,7 +7,7 @@ import { Input, PasswordInput } from "~/libs/components/components.ts";
 
 function LoginForm() {
   return (
-    <form className={styles.form}>
+    <>
       <h2 className={styles.title}>Log in to your account</h2>
       <div className={styles["auth-buttons"]}>
         <button className={styles["auth-button"]}>
@@ -40,7 +40,7 @@ function LoginForm() {
         error=""
         onChange={() => {}}
         labelText="Work Email"
-        wrapperClassName={styles["email-label"]}
+        wrapperClassName={styles["email-wrapper"]}
       />
       <PasswordInput
         name="password"
@@ -49,7 +49,7 @@ function LoginForm() {
         error=""
         onChange={() => {}}
         labelText="Password"
-        wrapperClassName={styles["password-label"]}
+        wrapperClassName={styles["password-wrapper"]}
       />
       <NavLink
         to={AppRoute.FORGOT_PASSWORD}
@@ -57,14 +57,16 @@ function LoginForm() {
       >
         Forgot your password?
       </NavLink>
-      <button className={styles["log-in-button"]}>Log in to Qencode</button>
+      <button type="button" className={styles["log-in-button"]}>
+        Log in to Qencode
+      </button>
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?
         <NavLink to={AppRoute.SIGN_UP} className={styles["sign-up-link"]}>
           Sign up
         </NavLink>
       </div>
-    </form>
+    </>
   );
 }
 
