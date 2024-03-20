@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
   labelText?: string;
+  showLabelText?: boolean;
   type?: InputType;
   value: string;
   name: string;
@@ -18,6 +19,7 @@ type Properties = {
 
 function Input({
   labelText,
+  showLabelText = false,
   type = "text",
   value,
   name,
@@ -32,7 +34,9 @@ function Input({
 
   return (
     <label className={getValidClassNames(styles.label, wrapperClassName)}>
-      <span className="visually-hidden">{labelText}</span>
+      <span className={getValidClassNames(!showLabelText && "visually-hidden")}>
+        {labelText}
+      </span>
       <input
         name={name}
         value={value}
