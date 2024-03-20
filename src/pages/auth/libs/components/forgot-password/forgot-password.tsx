@@ -4,7 +4,7 @@ import { Button, Input } from "~/libs/components/components.ts";
 function ForgotPassword() {
   return (
     <>
-      <h2 className={styles.title}>Forgot Password</h2>
+      <h2 className={styles.title}>Forgot Password?</h2>
       <Input
         type="email"
         name="email"
