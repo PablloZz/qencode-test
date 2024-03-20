@@ -5,7 +5,9 @@ import { type InputProperties } from "~/libs/components/input/input.js";
 import showPasswordIcon from "~/assets/images/show-password-icon.svg";
 import { getValidClassNames } from "~/libs/helpers/helpers.ts";
 
-function PasswordInput({ wrapperClassName, ...properties }: InputProperties) {
+type Properties = Omit<InputProperties, "type">;
+
+function PasswordInput({ wrapperClassName, ...properties }: Properties) {
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
 
   function handleTogglePasswordVisibility() {
