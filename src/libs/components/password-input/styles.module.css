@@ -1,4 +1,4 @@
-.passwordInputWrapper {
+.password-input-wrapper {
   position: relative;
   width: 100%;
 }
@@ -12,7 +12,7 @@
   border: none;
 }
 
-.passwordInput::-ms-reveal,
-.passwordInput::-ms-clear {
+.password-input::-ms-reveal,
+.password-input::-ms-clear {
   display: none;
 }

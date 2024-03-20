@@ -15,7 +15,7 @@ function PasswordInput({ wrapperClassName, ...properties }: InputProperties) {
   return (
     <div
       className={getValidClassNames(
-        styles.passwordInputWrapper,
+        styles["password-input-wrapper"],
         wrapperClassName
       )}
     >
@@ -32,7 +32,7 @@ function PasswordInput({ wrapperClassName, ...properties }: InputProperties) {
       <Input
         {...properties}
         type={isPasswordVisible ? "text" : "password"}
-        className={styles.passwordInput}
+        className={styles["password-input"]}
       />
     </div>
   );
