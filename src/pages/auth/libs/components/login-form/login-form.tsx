@@ -40,7 +40,7 @@ function LoginForm() {
         error=""
         onChange={() => {}}
         labelText="Work Email"
-        wrapperClassName={styles["email-label"]}
+        wrapperClassName={styles["email-wrapper"]}
       />
       <PasswordInput
         name="password"
@@ -49,7 +49,7 @@ function LoginForm() {
         error=""
         onChange={() => {}}
         labelText="Password"
-        wrapperClassName={styles["password-label"]}
+        wrapperClassName={styles["password-wrapper"]}
       />
       <NavLink
         to={AppRoute.FORGOT_PASSWORD}
