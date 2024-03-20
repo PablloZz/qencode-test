@@ -21,6 +21,13 @@
   user-select: none;
 }
 
-.auth-form {
+.form-wrapper {
   align-self: stretch;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

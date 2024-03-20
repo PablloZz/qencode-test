@@ -7,7 +7,7 @@ import { Input, PasswordInput } from "~/libs/components/components.ts";
 
 function LoginForm() {
   return (
-    <form className={styles.form}>
+    <>
       <h2 className={styles.title}>Log in to your account</h2>
       <div className={styles["auth-buttons"]}>
         <button className={styles["auth-button"]}>
@@ -66,7 +66,7 @@ function LoginForm() {
           Sign up
         </NavLink>
       </div>
-    </form>
+    </>
   );
 }
 
