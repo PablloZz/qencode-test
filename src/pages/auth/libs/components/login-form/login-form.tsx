@@ -1,9 +1,9 @@
 import googleIcon from "~/assets/images/google-icon.svg";
 import gitHubIcon from "~/assets/images/github-icon.svg";
-import showPasswordIcon from "~/assets/images/show-password-icon.svg";
 import styles from "./styles.module.css";
 import { NavLink } from "react-router-dom";
 import { AppRoute } from "~/libs/enums/enums.ts";
+import { Input, PasswordInput } from "~/libs/components/components.ts";
 
 function LoginForm() {
   return (
@@ -32,27 +32,25 @@ function LoginForm() {
         </button>
       </div>
       <span className={styles.separator}>or</span>
-      <label className={`${styles.label} ${styles["email-label"]}`}>
-        <span className="visually-hidden">Work Email</span>
-        <input
-          type="email"
-          name="email"
-          placeholder="Work email"
-          className={styles.input}
-        />
-      </label>
-      <label className={`${styles.label} ${styles["password-label"]}`}>
-        <span className="visually-hidden">Password</span>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          className={styles.input}
-        />
-        <button className={styles["password-visibility-button"]}>
-          <img src={showPasswordIcon} alt="Show password" role="img" />
-        </button>
-      </label>
+      <Input
+        type="email"
+        name="email"
+        placeholder="Work Email"
+        value=""
+        error=""
+        onChange={() => {}}
+        labelText="Work Email"
+        wrapperClassName={styles["email-label"]}
+      />
+      <PasswordInput
+        name="password"
+        placeholder="Password"
+        value=""
+        error=""
+        onChange={() => {}}
+        labelText="Password"
+        wrapperClassName={styles["password-label"]}
+      />
       <NavLink
         to={AppRoute.FORGOT_PASSWORD}
         className={styles["forgot-password-link"]}

@@ -1,0 +1,18 @@
+.passwordInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-visibility-button {
+  position: absolute;
+  right: 15px;
+  top: 24px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+}
+
+.passwordInput::-ms-reveal,
+.passwordInput::-ms-clear {
+  display: none;
+}
