@@ -1,9 +1,9 @@
-import { AuthLayout, LoginForm } from "./libs/components/components.ts";
+import { AuthLayout, ForgotPassword } from "./libs/components/components.ts";
 
 function Auth() {
   return (
     <AuthLayout>
-      <LoginForm />
+      <ForgotPassword />
     </AuthLayout>
   );
 }
