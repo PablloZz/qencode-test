@@ -3,18 +3,24 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding-top: 180px;
+  padding: 18.4vh 0 100px;
 }
 
 .auth-content {
   width: 400px;
+  max-width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: start;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo-wrapper {
   margin-bottom: 80px;
   width: 178px;
   height: 32px;
+  user-select: none;
+}
+
+.auth-form {
+  align-self: stretch;
 }

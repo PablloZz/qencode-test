@@ -1,26 +1,10 @@
-import styles from "./styles.module.css";
-import logo from "~/assets/images/logo.svg";
+import { AuthLayout, LoginForm } from "./libs/components/components.ts";
 
-type Properties = {
-  children: React.ReactNode;
-};
-
-function Auth({ children }: Properties) {
+function Auth() {
   return (
-    <main className={styles["auth-layout"]}>
-      <div className={styles["auth-content"]}>
-        <div className={styles["logo-wrapper"]}>
-          <img
-            src={logo}
-            alt="Qencode Logo"
-            role="img"
-            width="178"
-            height="32"
-          />
-        </div>
-        <section>{children}</section>
-      </div>
-    </main>
+    <AuthLayout>
+      <LoginForm />
+    </AuthLayout>
   );
 }
 
