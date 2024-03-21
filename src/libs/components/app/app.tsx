@@ -1,7 +1,7 @@
-import { Auth } from "~/pages/auth/auth.tsx";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return <Auth />;
+  return <Outlet />;
 }
 
 export { App };
