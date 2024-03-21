@@ -5,10 +5,10 @@ import { NavLink } from "react-router-dom";
 import { AppRoute } from "~/libs/enums/enums.ts";
 import { Button, Input } from "~/libs/components/components.ts";
 
-function LoginForm() {
+function SignUpForm() {
   return (
     <>
-      <h2 className={styles.title}>Log in to your account</h2>
+      <h2 className={styles.title}>Sign up to your account</h2>
       <div className={styles["auth-buttons"]}>
         <button className={styles["auth-button"]}>
           <img
@@ -59,19 +59,19 @@ function LoginForm() {
         Forgot your password?
       </NavLink>
       <Button
-        label="Log in to Qencode"
+        label="Sign up to Qencode"
         type="button"
-        className={styles["login-button"]}
+        className={styles["sign-up-button"]}
         variant="primary"
       />
-      <div className={styles["sign-up-description"]}>
-        Is your company new to Qencode?
-        <NavLink to={AppRoute.SIGN_UP} className={styles["sign-up-link"]}>
-          Sign up
+      <div className={styles["login-description"]}>
+        Already have an account?
+        <NavLink to={AppRoute.LOGIN} className={styles["login-link"]}>
+          Log in
         </NavLink>
       </div>
     </>
   );
 }
 
-export { LoginForm };
+export { SignUpForm };

@@ -1,52 +1,37 @@
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { type InputType } from "./libs/types/types.js";
+import { BareInput } from "./libs/components/components.ts";
+import { type BareInputProperties } from "./libs/components/bare-input/bare-input.tsx";
 import styles from "./styles.module.css";
 
 type Properties = {
   labelText?: string;
-  type?: InputType;
-  value: string;
-  name: string;
-  onChange: (event: React.ChangeEvent) => void;
-  placeholder?: string;
+  showLabelText?: boolean;
   error: string;
-  className?: string;
-  wrapperClassName?: string;
+  labelClassName?: string;
   labelTextClassName?: string;
-  required?: boolean;
-};
+} & Omit<BareInputProperties, "hasError">;
 
 function Input({
-  labelText,
-  type = "text",
-  value,
-  name,
-  onChange,
-  placeholder = "",
+  showLabelText = false,
   error = "",
-  className,
-  wrapperClassName,
-  required,
+  labelText,
+  labelClassName,
+  ...properties
 }: Properties) {
   const hasError = Boolean(error);
 
   return (
-    <label className={getValidClassNames(styles.label, wrapperClassName)}>
-      <span className="visually-hidden">{labelText}</span>
-      <input
-        name={name}
-        value={value}
-        onChange={onChange}
+    <label className={getValidClassNames(styles.label, labelClassName)}>
+      <span
         className={getValidClassNames(
-          styles.input,
-          hasError && styles.error,
-          className
+          !showLabelText && "visually-hidden",
+          styles.labelText
         )}
-        placeholder={placeholder}
-        type={type}
-        required={required}
-      />
-      <span className={styles["error-message"]}>{hasError && error}</span>
+      >
+        {labelText}
+      </span>
+      <BareInput hasError={hasError} {...properties} />
+      {hasError && <span className={styles["error-message"]}>{error}</span>}
     </label>
   );
 }

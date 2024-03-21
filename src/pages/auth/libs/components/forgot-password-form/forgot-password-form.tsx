@@ -1,10 +1,10 @@
 import styles from "./styles.module.css";
 import { Button, Input } from "~/libs/components/components.ts";
 
-function ForgotPassword() {
+function ForgotPasswordForm() {
   return (
     <>
-      <h2 className={styles.title}>Forgot Password</h2>
+      <h2 className={styles.title}>Forgot Password?</h2>
       <Input
         type="email"
         name="email"
@@ -13,7 +13,7 @@ function ForgotPassword() {
         error=""
         onChange={() => {}}
         labelText="Email"
-        wrapperClassName={styles["email-wrapper"]}
+        labelClassName={styles["email-label"]}
       />
       <Button
         label="Send"
@@ -21,9 +21,9 @@ function ForgotPassword() {
         className={styles["send-button"]}
         variant="primary"
       />
-      <Button label="Send" type="button" variant="outlined" />
+      <Button label="Cancel" type="button" variant="outlined" />
     </>
   );
 }
 
-export { ForgotPassword };
+export { ForgotPasswordForm };
