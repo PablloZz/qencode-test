@@ -16,6 +16,7 @@
 }
 
 .button-outlined {
+  letter-spacing: -0.0384px;
   color: var(--black-pearl);
   background: var(--white);
   border: 1.2px solid var(--light-gray);
