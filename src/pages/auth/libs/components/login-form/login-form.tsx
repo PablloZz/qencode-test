@@ -3,7 +3,7 @@ import gitHubIcon from "~/assets/images/github-icon.svg";
 import styles from "./styles.module.css";
 import { NavLink } from "react-router-dom";
 import { AppRoute } from "~/libs/enums/enums.ts";
-import { Button, Input, PasswordInput } from "~/libs/components/components.ts";
+import { Button, Input } from "~/libs/components/components.ts";
 
 function LoginForm() {
   return (
@@ -40,16 +40,17 @@ function LoginForm() {
         error=""
         onChange={() => {}}
         labelText="Work Email"
-        wrapperClassName={styles["email-wrapper"]}
+        labelClassName={styles["email-label"]}
       />
-      <PasswordInput
+      <Input
+        type="password"
         name="password"
         placeholder="Password"
         value=""
         error=""
         onChange={() => {}}
         labelText="Password"
-        wrapperClassName={styles["password-wrapper"]}
+        labelClassName={styles["password-label"]}
       />
       <NavLink
         to={AppRoute.FORGOT_PASSWORD}
