@@ -11,7 +11,6 @@
   align-self: stretch;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 16px;
   margin: 40px 0 30px;
 }
@@ -27,6 +26,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
+  color: var(--black-pearl);
   background: var(--white);
   padding: 0 20px;
   border: 1.2px solid var(--light-gray);
@@ -59,16 +59,7 @@
 }
 
 .password-label {
-  margin: 25px 0 15px;
-}
-
-.forgot-password-link {
-  align-self: end;
-  font-family: "Basis Grotesque Pro", Verdana, sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--royal-blue);
+  margin-top: 25px;
 }
 
 .sign-up-button {
@@ -78,10 +69,11 @@
 .login-description {
   font-family: "Basis Grotesque Pro", Verdana, sans-serif;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   text-align: center;
-  color: var(--mine-shaft);
+  letter-spacing: 0.2px;
+  color: var(--black-pearl);
 }
 
 .login-link {

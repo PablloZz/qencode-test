@@ -52,12 +52,6 @@ function SignUpForm() {
         labelText="Password"
         labelClassName={styles["password-label"]}
       />
-      <NavLink
-        to={AppRoute.FORGOT_PASSWORD}
-        className={styles["forgot-password-link"]}
-      >
-        Forgot your password?
-      </NavLink>
       <Button
         label="Sign up to Qencode"
         type="button"
