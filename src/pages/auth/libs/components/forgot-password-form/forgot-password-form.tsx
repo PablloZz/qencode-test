@@ -21,7 +21,7 @@ function ForgotPasswordForm() {
         className={styles["send-button"]}
         variant="primary"
       />
-      <Button label="Send" type="button" variant="outlined" />
+      <Button label="Cancel" type="button" variant="outlined" />
     </>
   );
 }
