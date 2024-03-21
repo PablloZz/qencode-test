@@ -31,7 +31,7 @@ function Input({
         {labelText}
       </span>
       <BareInput hasError={hasError} {...properties} />
-      <span className={styles["error-message"]}>{hasError && error}</span>
+      {hasError && <span className={styles["error-message"]}>{error}</span>}
     </label>
   );
 }
