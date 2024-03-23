@@ -1,11 +1,23 @@
+import { NavLink } from "react-router-dom";
 import googleIcon from "~/assets/images/google-icon.svg";
 import gitHubIcon from "~/assets/images/github-icon.svg";
-import styles from "./styles.module.css";
-import { NavLink } from "react-router-dom";
 import { AppRoute } from "~/libs/enums/enums.ts";
 import { Button, Input } from "~/libs/components/components.ts";
+import { useLoginForm } from "./libs/hooks/hooks.ts";
+import styles from "./styles.module.css";
 
 function LoginForm() {
+  const {
+    formValues,
+    formErrors,
+    validEmail,
+    handleChangeEmail,
+    handleValidateEmail,
+    handleChangePassword,
+    handleValidatePassword,
+    handleFormSubmit,
+  } = useLoginForm();
+  
   return (
     <>
       <h2 className={styles.title}>Log in to your account</h2>
@@ -36,33 +48,40 @@ function LoginForm() {
         type="email"
         name="email"
         placeholder="Work Email"
-        value=""
-        error=""
-        onChange={() => {}}
+        value={formValues.email}
+        error={formErrors.emailError}
+        onChange={handleChangeEmail}
+        onBlur={handleValidateEmail}
         labelText="Work Email"
         labelClassName={styles["email-label"]}
       />
-      <Input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value=""
-        error=""
-        onChange={() => {}}
-        labelText="Password"
-        labelClassName={styles["password-label"]}
-      />
-      <NavLink
-        to={AppRoute.FORGOT_PASSWORD}
-        className={styles["forgot-password-link"]}
-      >
-        Forgot your password?
-      </NavLink>
+      {validEmail && (
+        <>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formValues.password}
+            error={formErrors.passwordError}
+            onChange={handleChangePassword}
+            onBlur={handleValidatePassword}
+            labelText="Password"
+            labelClassName={styles["password-label"]}
+          />
+          <NavLink
+            to={AppRoute.FORGOT_PASSWORD}
+            className={styles["forgot-password-link"]}
+          >
+            Forgot your password?
+          </NavLink>
+        </>
+      )}
       <Button
         label="Log in to Qencode"
         type="button"
         className={styles["login-button"]}
         variant="primary"
+        onClick={handleFormSubmit}
       />
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?

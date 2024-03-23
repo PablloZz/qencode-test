@@ -10,6 +10,7 @@ type Properties = {
   name: string;
   value: string;
   onChange: (event: React.ChangeEvent) => void;
+  onBlur?: ((event: React.FocusEvent<HTMLInputElement>) => void) | (() => void);
   required?: boolean;
   className?: string;
   hasError: boolean;
@@ -21,6 +22,7 @@ function BareInput({
   name,
   value,
   onChange,
+  onBlur,
   required,
   className,
   hasError,
@@ -56,6 +58,7 @@ function BareInput({
           name={name}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           className={classes}
           placeholder={placeholder}
           required={required}
@@ -70,6 +73,7 @@ function BareInput({
       name={name}
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
       className={classes}
       placeholder={placeholder}
       required={required}
