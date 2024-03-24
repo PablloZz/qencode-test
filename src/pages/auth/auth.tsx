@@ -10,6 +10,7 @@ import {
 
 function Auth() {
   const { pathname } = useLocation();
+  
   function getLayout(path: string) {
     switch (path) {
       case AppRoute.SIGN_UP: {
