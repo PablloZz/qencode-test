@@ -18,9 +18,7 @@ function AuthLayout({ children }: Properties) {
             height="32"
           />
         </div>
-        <section className={styles["form-wrapper"]}>
-          <form className={styles.form}>{children}</form>
-        </section>
+        <section className={styles["form-wrapper"]}>{children}</section>
       </div>
     </main>
   );
