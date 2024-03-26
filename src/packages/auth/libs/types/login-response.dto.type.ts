@@ -1,8 +1,8 @@
 type LoginResponseDto = {
   accessToken: string;
   refreshToken: string;
-  tokenExpire: string;
-  refreshTokenExpire: string;
+  tokenExpire: number;
+  refreshTokenExpire: number;
 };
 
 export { type LoginResponseDto };
