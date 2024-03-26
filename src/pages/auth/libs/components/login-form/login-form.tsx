@@ -15,11 +15,10 @@ function LoginForm() {
     handleValidateEmail,
     handleChangePassword,
     handleValidatePassword,
-    handleFormSubmit,
   } = useLoginForm();
-  
+
   return (
-    <>
+    <form className={styles.form}>
       <h2 className={styles.title}>Log in to your account</h2>
       <div className={styles["auth-buttons"]}>
         <button className={styles["auth-button"]}>
@@ -78,10 +77,9 @@ function LoginForm() {
       )}
       <Button
         label="Log in to Qencode"
-        type="button"
+        type="submit"
         className={styles["login-button"]}
         variant="primary"
-        onClick={handleFormSubmit}
       />
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?
@@ -89,7 +87,7 @@ function LoginForm() {
           Sign up
         </NavLink>
       </div>
-    </>
+    </form>
   );
 }
 

@@ -10,11 +10,10 @@ function CreateNewPasswordForm() {
     handleValidatePassword,
     handleChangeConfirmPassword,
     handleValidateConfirmPassword,
-    handleFormSubmit,
   } = useCreateNewPasswordForm();
 
   return (
-    <>
+    <form className={styles.form}>
       <h2 className={styles.title}>Create new Password?</h2>
       <Input
         type="password"
@@ -41,12 +40,11 @@ function CreateNewPasswordForm() {
       />
       <Button
         label="Reset Password"
-        type="button"
+        type="submit"
         className={styles["reset-password-button"]}
         variant="primary"
-        onClick={handleFormSubmit}
       />
-    </>
+    </form>
   );
 }
 
