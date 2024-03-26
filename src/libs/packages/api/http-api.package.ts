@@ -1,5 +1,6 @@
-import { ContentType, HttpHeader } from "~/libs/enums/enums.ts";
-import { HttpCode, HttpError, type THttp } from "../http/http.ts";
+import { ContentType, StorageKey } from "~/libs/enums/enums.ts";
+import { DEFAULT_ERROR_MESSAGE } from "~/libs/constants/constants.ts";
+import { HttpCode, HttpError, HttpHeader, type THttp } from "../http/http.ts";
 import {
   type HttpApiOptions,
   type THttpApi,
@@ -26,9 +27,9 @@ class HttpApi implements THttpApi {
   }
 
   public async load(path: string, options: HttpApiOptions): Promise<Response> {
-    const { method, contentType, payload } = options;
+    const { method, contentType, payload, hasAuth } = options;
 
-    const headers = await this.getHeaders(contentType);
+    const headers = await this.getHeaders(hasAuth, contentType);
 
     const response = await this.http.load(path, {
       method,
@@ -46,12 +47,19 @@ class HttpApi implements THttpApi {
   }
 
   private async getHeaders(
+    hasAuth: boolean,
     contentType?: (typeof ContentType)[keyof typeof ContentType]
   ): Promise<Headers> {
     const headers = new Headers();
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
+    }
+
+    if (hasAuth) {
+      const token = window.localStorage.getItem(StorageKey.TOKEN);
+
+      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token ?? ""}`);
     }
 
     return headers;
@@ -76,13 +84,16 @@ class HttpApi implements THttpApi {
     }
 
     const { detail } = parsedException;
-
     if (typeof detail === "string") {
       errorMessage = detail;
     }
 
     if (Array.isArray(detail)) {
       errorMessage = detail.map(d => d.msg).join("\n");
+    }
+
+    if (!errorMessage) {
+      errorMessage = DEFAULT_ERROR_MESSAGE;
     }
 
     throw new HttpError({
