@@ -17,8 +17,8 @@ class Auth extends HttpApi {
       method: "POST",
       contentType: ContentType.JSON,
       payload: JSON.stringify(payload),
+      hasAuth: false,
     });
-
     const {
       access_token: accessToken,
       refresh_token: refreshToken,
