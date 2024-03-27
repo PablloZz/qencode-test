@@ -1,10 +1,12 @@
 import { Button, Input } from "~/libs/components/components.ts";
 import { useForgotPasswordForm } from "./libs/hooks/hooks.ts";
+import { useForgotPassword } from "../../contexts/contexts.ts";
 import styles from "./styles.module.css";
 
 function ForgotPasswordForm() {
   const { formValues, formErrors, handleChangeEmail, handleValidateEmail } =
     useForgotPasswordForm();
+  const { loading } = useForgotPassword();
 
   return (
     <form className={styles.form}>
@@ -25,6 +27,7 @@ function ForgotPasswordForm() {
         type="submit"
         className={styles["send-button"]}
         variant="primary"
+        loading={loading}
       />
       <Button label="Cancel" type="button" variant="outlined" />
     </form>

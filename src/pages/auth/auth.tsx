@@ -29,7 +29,11 @@ function Auth() {
         );
       }
       case AppRoute.FORGOT_PASSWORD: {
-        return <ForgotPasswordForm />;
+        return (
+          <ForgotPasswordProvider>
+            <ForgotPasswordForm />
+          </ForgotPasswordProvider>
+        );
       }
       case AppRoute.CREATE_NEW_PASSWORD: {
         return <CreateNewPasswordForm />;
