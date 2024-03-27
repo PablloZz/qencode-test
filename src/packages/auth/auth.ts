@@ -8,4 +8,6 @@ export { auth };
 export {
   type LoginRequestDto,
   type LoginResponseDto,
+  type ForgotPasswordRequestDto,
+  type ForgotPasswordResponseDto,
 } from "./libs/types/types.ts";

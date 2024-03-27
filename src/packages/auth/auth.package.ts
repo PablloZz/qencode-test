@@ -5,6 +5,8 @@ import { AuthApiPath } from "./libs/enums/enums.ts";
 import {
   type LoginResponseDto,
   type LoginRequestDto,
+  type ForgotPasswordResponseDto,
+  type ForgotPasswordRequestDto,
 } from "./libs/types/types.ts";
 
 class Auth extends HttpApi {
@@ -32,6 +34,23 @@ class Auth extends HttpApi {
       tokenExpire,
       refreshTokenExpire,
     };
+  }
+
+  public async resetPassword(
+    payload: ForgotPasswordRequestDto
+  ): Promise<ForgotPasswordResponseDto> {
+    const response = await this.load(
+      this.getFullEndpoint(AuthApiPath.RESET_PASSWORD),
+      {
+        method: "POST",
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+        hasAuth: false,
+      }
+    );
+    const { detail } = await response.json();
+
+    return { detail };
   }
 }
 
