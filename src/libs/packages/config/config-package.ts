@@ -12,6 +12,7 @@ class Config implements TConfig {
       API: {
         URL: import.meta.env.VITE_APP_API_URL,
       },
+      SECRET_TOKEN: import.meta.env.VITE_APP_SECRET_TOKEN,
     };
   }
 }
