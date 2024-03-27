@@ -1,4 +1,5 @@
 import { Button, Input } from "~/libs/components/components.ts";
+import { useSetNewPassword } from "../../contexts/contexts.ts";
 import { useCreateNewPasswordForm } from "./libs/hooks/hooks.ts";
 import styles from "./styles.module.css";
 
@@ -11,6 +12,7 @@ function CreateNewPasswordForm() {
     handleChangeConfirmPassword,
     handleValidateConfirmPassword,
   } = useCreateNewPasswordForm();
+  const { loading } = useSetNewPassword();
 
   return (
     <form className={styles.form}>
@@ -43,6 +45,7 @@ function CreateNewPasswordForm() {
         type="submit"
         className={styles["reset-password-button"]}
         variant="primary"
+        loading={loading}
       />
     </form>
   );

@@ -36,7 +36,11 @@ function Auth() {
         );
       }
       case AppRoute.CREATE_NEW_PASSWORD: {
-        return <CreateNewPasswordForm />;
+        return (
+          <SetNewPasswordProvider>
+            <CreateNewPasswordForm />
+          </SetNewPasswordProvider>
+        );
       }
     }
   }
