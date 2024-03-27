@@ -8,14 +8,15 @@ import {
   isValidEmail,
   shouldRemoveMinLengthError,
 } from "~/pages/auth/auth.tsx";
-import { type LoginFormErrors, type LoginFormValues } from "../types/types.ts";
+import { type LoginRequestDto } from "~/packages/auth/auth.ts";
+import { type LoginFormErrors } from "../types/types.ts";
 import {
   INITIAL_LOGIN_FORM_ERRORS,
   INITIAL_LOGIN_FORM_VALUES,
 } from "../constants/constants.ts";
 
 function useLoginForm() {
-  const [formValues, setFormValues] = useState<LoginFormValues>(
+  const [formValues, setFormValues] = useState<LoginRequestDto>(
     INITIAL_LOGIN_FORM_VALUES
   );
   const [formErrors, setFormErrors] = useState<LoginFormErrors>(
@@ -99,7 +100,7 @@ function useLoginForm() {
   }
 
   function handleFormSubmit() {
-    if (!isFormFilled<LoginFormValues>(formValues)) {
+    if (!isFormFilled<LoginRequestDto>(formValues)) {
       setFormErrors({
         email: AuthValidationMessage.PROVIDE_ALL_FIELDS,
         password: AuthValidationMessage.PROVIDE_ALL_FIELDS,

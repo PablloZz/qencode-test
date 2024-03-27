@@ -1,6 +1,6 @@
-import { type LoginFormValues } from "../types/types.ts";
+import { type LoginRequestDto } from "~/packages/auth/auth.ts";
 
-const INITIAL_LOGIN_FORM_VALUES: LoginFormValues = {
+const INITIAL_LOGIN_FORM_VALUES: LoginRequestDto = {
   email: "",
   password: "",
 };

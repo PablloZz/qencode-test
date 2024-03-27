@@ -8,10 +8,8 @@ import {
   isValidEmail,
 } from "~/pages/auth/auth.tsx";
 import { AppRoute } from "~/libs/enums/enums.ts";
-import {
-  ForgotPasswordFormErrors,
-  ForgotPasswordFormValues,
-} from "../types/types.ts";
+import { type ForgotPasswordRequestDto } from "~/packages/auth/auth.ts";
+import { type ForgotPasswordFormErrors } from "../types/types.ts";
 import {
   INITIAL_FORGOT_PASSWORD_FORM_ERRORS,
   INITIAL_FORGOT_PASSWORD_FORM_VALUES,
@@ -19,7 +17,7 @@ import {
 
 function useForgotPasswordForm() {
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState<ForgotPasswordFormValues>(
+  const [formValues, setFormValues] = useState<ForgotPasswordRequestDto>(
     INITIAL_FORGOT_PASSWORD_FORM_VALUES
   );
   const [formErrors, setFormErrors] = useState<ForgotPasswordFormErrors>(
@@ -50,7 +48,7 @@ function useForgotPasswordForm() {
   }
 
   function handleFormSubmit() {
-    if (!isFormFilled<ForgotPasswordFormValues>(formValues)) {
+    if (!isFormFilled<ForgotPasswordRequestDto>(formValues)) {
       setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
       return;
     }
