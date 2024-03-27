@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AuthValidationMessage,
+  getEmptyFields,
+  getErrorFields,
   isEmailFilled,
-  isFormFilled,
-  isFormValid,
   isValidEmail,
 } from "~/pages/auth/auth.tsx";
 import { AppRoute } from "~/libs/enums/enums.ts";
@@ -57,14 +57,15 @@ function useForgotPasswordForm() {
     return (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      if (!isFormFilled<ForgotPasswordRequestDto>(formValues)) {
+      const emptyFields = getEmptyFields<ForgotPasswordRequestDto>(formValues);
+      if (emptyFields.length) {
         setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
         return;
       }
 
-      if (isFormValid<ForgotPasswordFormErrors>(formErrors)) {
+      const errorFields = getErrorFields<ForgotPasswordFormErrors>(formErrors);
+      if (!errorFields.length) {
         submitHandler(formValues);
-        navigate(AppRoute.CREATE_NEW_PASSWORD);
       }
     };
   }

@@ -50,12 +50,13 @@ function Auth() {
 export { Auth };
 export { AuthValidationMessage } from "./libs/enums/enums.ts";
 export {
-  isFormValid,
-  isFormFilled,
   isValidEmail,
   isEmailFilled,
+  getEmptyFields,
+  getErrorFields,
   isEnoughCharacters,
-  isProvideFieldsErrorExist,
+  getUpdatedFormErrors,
+  isProvideFieldErrorExist,
   shouldRemoveMinLengthError,
 } from "./libs/helpers/helpers.ts";
 export { EMPTY_FIELD } from "./libs/constants/constants.ts";

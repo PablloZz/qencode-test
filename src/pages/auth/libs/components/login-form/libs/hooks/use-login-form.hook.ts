@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {
   AuthValidationMessage,
+  getEmptyFields,
+  getErrorFields,
+  getUpdatedFormErrors,
   isEmailFilled,
   isEnoughCharacters,
-  isFormFilled,
-  isProvideFieldsErrorExist,
+  isProvideFieldErrorExist,
   isValidEmail,
   shouldRemoveMinLengthError,
 } from "~/pages/auth/auth.tsx";
@@ -40,7 +42,7 @@ function useLoginForm() {
       event.target as HTMLInputElement;
     const { email: emailError } = formErrors;
 
-    if (isProvideFieldsErrorExist(emailError)) {
+    if (isProvideFieldErrorExist(emailError)) {
       handleResetErrors();
     }
 
@@ -74,7 +76,7 @@ function useLoginForm() {
     const { value: password } = event.target as HTMLInputElement;
     const { password: passwordError } = formErrors;
 
-    if (isProvideFieldsErrorExist(passwordError)) {
+    if (isProvideFieldErrorExist(passwordError)) {
       handleResetErrors();
     }
 
@@ -105,10 +107,25 @@ function useLoginForm() {
     return (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      if (!isFormFilled<LoginRequestDto>(formValues)) {
-        setFormErrors({
-          email: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-          password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+      const emptyFields = getEmptyFields<LoginRequestDto>(formValues);
+      if (emptyFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors<LoginFormErrors>(
+            previousErrors,
+            emptyFields
+          );
+        });
+
+        return;
+      }
+
+      const errorFields = getErrorFields<LoginFormErrors>(formErrors);
+      if (errorFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors<LoginFormErrors>(
+            previousErrors,
+            errorFields
+          );
         });
 
         return;

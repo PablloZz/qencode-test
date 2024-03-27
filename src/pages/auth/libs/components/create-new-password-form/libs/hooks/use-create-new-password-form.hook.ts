@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   AuthValidationMessage,
-  isFormFilled,
-  isFormValid,
+  getEmptyFields,
+  getErrorFields,
+  getUpdatedFormErrors,
   isEnoughCharacters,
-  isProvideFieldsErrorExist,
+  isProvideFieldErrorExist,
   shouldRemoveMinLengthError,
 } from "~/pages/auth/auth.tsx";
-import { AppRoute } from "~/libs/enums/enums.ts";
+import { type SetNewPasswordRequestDto } from "~/packages/auth/auth.ts";
 import {
   type HandleUpdatePasswordTypeErrors,
   type CreateNewPasswordFormErrors,
@@ -23,10 +23,8 @@ import {
   shouldSetMismatchError,
 } from "../helpers/helpers.ts";
 import { CreateNewPasswordFormValidationMessage } from "../enums/enums.ts";
-import { type SetNewPasswordRequestDto } from "~/packages/auth/auth.ts";
 
 function useCreateNewPasswordForm() {
-  const navigate = useNavigate();
   const [formValues, setFormValues] = useState<CreateNewPasswordFormValues>(
     INITIAL_CREATE_NEW_PASSWORD_FORM_VALUES
   );
@@ -52,7 +50,7 @@ function useCreateNewPasswordForm() {
     const currentErrorFieldType: keyof CreateNewPasswordFormErrors =
       passwordFieldType === "password" ? "password" : "confirmPassword";
 
-    if (isProvideFieldsErrorExist(errorMessage)) {
+    if (isProvideFieldErrorExist(errorMessage)) {
       handleResetErrors();
     }
 
@@ -146,19 +144,30 @@ function useCreateNewPasswordForm() {
     return (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      if (!isFormFilled<CreateNewPasswordFormValues>(formValues)) {
-        setFormErrors({
-          password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-          confirmPassword: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+      const emptyFields =
+        getEmptyFields<CreateNewPasswordFormValues>(formValues);
+      if (emptyFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors<CreateNewPasswordFormErrors>(
+            previousErrors,
+            emptyFields
+          );
         });
 
         return;
       }
 
-      if (isFormValid<CreateNewPasswordFormErrors>(formErrors)) {
-        navigate(AppRoute.LOGIN);
-        submitHandler({ password: formValues.password });
+      const errorFields =
+        getErrorFields<CreateNewPasswordFormErrors>(formErrors);
+      if (errorFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors(previousErrors, errorFields);
+        });
+
+        return;
       }
+
+      submitHandler({ password: formValues.password });
     };
   }
 
