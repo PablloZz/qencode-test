@@ -7,17 +7,26 @@ import {
   LoginForm,
   SignUpForm,
 } from "./libs/components/components.ts";
+import {
+  ForgotPasswordProvider,
+  LoginProvider,
+  SetNewPasswordProvider,
+} from "./libs/contexts/contexts.ts";
 
 function Auth() {
   const { pathname } = useLocation();
-  
+
   function getLayout(path: string) {
     switch (path) {
       case AppRoute.SIGN_UP: {
         return <SignUpForm />;
       }
       case AppRoute.LOGIN: {
-        return <LoginForm />;
+        return (
+          <LoginProvider>
+            <LoginForm />
+          </LoginProvider>
+        );
       }
       case AppRoute.FORGOT_PASSWORD: {
         return <ForgotPasswordForm />;

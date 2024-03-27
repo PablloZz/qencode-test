@@ -3,6 +3,7 @@ import googleIcon from "~/assets/images/google-icon.svg";
 import gitHubIcon from "~/assets/images/github-icon.svg";
 import { AppRoute } from "~/libs/enums/enums.ts";
 import { Button, Input } from "~/libs/components/components.ts";
+import { useLogin } from "../../contexts/contexts.ts";
 import { useLoginForm } from "./libs/hooks/hooks.ts";
 import styles from "./styles.module.css";
 
@@ -16,6 +17,7 @@ function LoginForm() {
     handleChangePassword,
     handleValidatePassword,
   } = useLoginForm();
+  const { loading } = useLogin();
 
   return (
     <form className={styles.form}>
@@ -80,6 +82,7 @@ function LoginForm() {
         type="submit"
         className={styles["login-button"]}
         variant="primary"
+        loading={loading}
       />
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?
