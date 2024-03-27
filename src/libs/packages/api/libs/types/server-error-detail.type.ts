@@ -1,9 +1,11 @@
+import {
+  type ServerErrorDetailInfo,
+  type ServerErrorDetailError,
+} from "./types.ts";
+
 type ServerErrorDetail =
-  | {
-      loc: (string | number)[];
-      msg: string;
-      type: string;
-    }[]
+  | ServerErrorDetailInfo[]
+  | ServerErrorDetailError[]
   | string;
 
 export { type ServerErrorDetail };

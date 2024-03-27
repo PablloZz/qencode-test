@@ -5,6 +5,8 @@ import {
   type HttpApiOptions,
   type THttpApi,
   type ServerErrorResponse,
+  type ServerErrorDetailError,
+  type ServerErrorDetailInfo,
 } from "./libs/types/types.ts";
 
 type Constructor = {
@@ -88,8 +90,19 @@ class HttpApi implements THttpApi {
       errorMessage = detail;
     }
 
-    if (Array.isArray(detail)) {
-      errorMessage = detail.map(d => d.msg).join("\n");
+    if (Array.isArray(detail) && detail.every(d => d.hasOwnProperty("error"))) {
+      errorMessage = detail
+        .map(d => (d as ServerErrorDetailError).error)
+        .join("\n");
+    }
+
+    if (
+      Array.isArray(detail) &&
+      detail.every(msg => msg.hasOwnProperty("msg"))
+    ) {
+      errorMessage = detail
+        .map(d => (d as ServerErrorDetailInfo).msg)
+        .join("\n");
     }
 
     if (!errorMessage) {
