@@ -7,22 +7,40 @@ import {
   LoginForm,
   SignUpForm,
 } from "./libs/components/components.ts";
+import {
+  ForgotPasswordProvider,
+  LoginProvider,
+  SetNewPasswordProvider,
+} from "./libs/contexts/contexts.ts";
 
 function Auth() {
   const { pathname } = useLocation();
+
   function getLayout(path: string) {
     switch (path) {
       case AppRoute.SIGN_UP: {
         return <SignUpForm />;
       }
       case AppRoute.LOGIN: {
-        return <LoginForm />;
+        return (
+          <LoginProvider>
+            <LoginForm />
+          </LoginProvider>
+        );
       }
       case AppRoute.FORGOT_PASSWORD: {
-        return <ForgotPasswordForm />;
+        return (
+          <ForgotPasswordProvider>
+            <ForgotPasswordForm />
+          </ForgotPasswordProvider>
+        );
       }
       case AppRoute.CREATE_NEW_PASSWORD: {
-        return <CreateNewPasswordForm />;
+        return (
+          <SetNewPasswordProvider>
+            <CreateNewPasswordForm />
+          </SetNewPasswordProvider>
+        );
       }
     }
   }
@@ -32,12 +50,13 @@ function Auth() {
 export { Auth };
 export { AuthValidationMessage } from "./libs/enums/enums.ts";
 export {
-  isFormValid,
-  isFormFilled,
   isValidEmail,
   isEmailFilled,
+  getEmptyFields,
+  getErrorFields,
   isEnoughCharacters,
-  isProvideFieldsErrorExist,
+  getUpdatedFormErrors,
+  isProvideFieldErrorExist,
   shouldRemoveMinLengthError,
 } from "./libs/helpers/helpers.ts";
 export { EMPTY_FIELD } from "./libs/constants/constants.ts";

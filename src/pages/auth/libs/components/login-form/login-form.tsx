@@ -3,6 +3,7 @@ import googleIcon from "~/assets/images/google-icon.svg";
 import gitHubIcon from "~/assets/images/github-icon.svg";
 import { AppRoute } from "~/libs/enums/enums.ts";
 import { Button, Input } from "~/libs/components/components.ts";
+import { useLogin } from "../../contexts/contexts.ts";
 import { useLoginForm } from "./libs/hooks/hooks.ts";
 import styles from "./styles.module.css";
 
@@ -17,9 +18,14 @@ function LoginForm() {
     handleValidatePassword,
     handleFormSubmit,
   } = useLoginForm();
-  
+  const { loading, handleLogin } = useLogin();
+
   return (
-    <>
+    <form
+      onSubmit={handleFormSubmit(handleLogin)}
+      noValidate
+      className={styles.form}
+    >
       <h2 className={styles.title}>Log in to your account</h2>
       <div className={styles["auth-buttons"]}>
         <button className={styles["auth-button"]}>
@@ -49,7 +55,7 @@ function LoginForm() {
         name="email"
         placeholder="Work Email"
         value={formValues.email}
-        error={formErrors.emailError}
+        error={formErrors.email}
         onChange={handleChangeEmail}
         onBlur={handleValidateEmail}
         labelText="Work Email"
@@ -62,7 +68,7 @@ function LoginForm() {
             name="password"
             placeholder="Password"
             value={formValues.password}
-            error={formErrors.passwordError}
+            error={formErrors.password}
             onChange={handleChangePassword}
             onBlur={handleValidatePassword}
             labelText="Password"
@@ -78,10 +84,10 @@ function LoginForm() {
       )}
       <Button
         label="Log in to Qencode"
-        type="button"
+        type="submit"
         className={styles["login-button"]}
         variant="primary"
-        onClick={handleFormSubmit}
+        loading={loading}
       />
       <div className={styles["sign-up-description"]}>
         Is your company new to Qencode?
@@ -89,7 +95,7 @@ function LoginForm() {
           Sign up
         </NavLink>
       </div>
-    </>
+    </form>
   );
 }
 

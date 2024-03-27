@@ -1,6 +1,6 @@
 type CreateNewPasswordFormErrors = {
-  passwordError: string;
-  confirmPasswordError: string;
+  password: string;
+  confirmPassword: string;
 };
 
 export { type CreateNewPasswordFormErrors };

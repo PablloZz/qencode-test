@@ -33,6 +33,10 @@
   border: none;
 }
 
+.password-input {
+  padding-right: 40px;
+}
+
 .password-input::-ms-reveal,
 .password-input::-ms-clear {
   display: none;

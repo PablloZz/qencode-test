@@ -1,21 +1,24 @@
 import { useState } from "react";
 import {
   AuthValidationMessage,
+  getEmptyFields,
+  getErrorFields,
+  getUpdatedFormErrors,
   isEmailFilled,
   isEnoughCharacters,
-  isFormFilled,
-  isProvideFieldsErrorExist,
+  isProvideFieldErrorExist,
   isValidEmail,
   shouldRemoveMinLengthError,
 } from "~/pages/auth/auth.tsx";
-import { type LoginFormErrors, type LoginFormValues } from "../types/types.ts";
+import { type LoginRequestDto } from "~/packages/auth/auth.ts";
+import { type LoginFormErrors } from "../types/types.ts";
 import {
   INITIAL_LOGIN_FORM_ERRORS,
   INITIAL_LOGIN_FORM_VALUES,
 } from "../constants/constants.ts";
 
 function useLoginForm() {
-  const [formValues, setFormValues] = useState<LoginFormValues>(
+  const [formValues, setFormValues] = useState<LoginRequestDto>(
     INITIAL_LOGIN_FORM_VALUES
   );
   const [formErrors, setFormErrors] = useState<LoginFormErrors>(
@@ -29,23 +32,24 @@ function useLoginForm() {
 
   function handleResetErrors() {
     setFormErrors({
-      emailError: AuthValidationMessage.NO_ERROR,
-      passwordError: AuthValidationMessage.NO_ERROR,
+      email: AuthValidationMessage.NO_ERROR,
+      password: AuthValidationMessage.NO_ERROR,
     });
   }
 
   function handleChangeEmail(event: React.ChangeEvent) {
     const { value: email, validationMessage } =
       event.target as HTMLInputElement;
+    const { email: emailError } = formErrors;
 
-    if (isProvideFieldsErrorExist(formErrors.emailError)) {
+    if (isProvideFieldErrorExist(emailError)) {
       handleResetErrors();
     }
 
     if (isValidEmail(validationMessage, email)) {
       setFormErrors(previousErrors => ({
         ...previousErrors,
-        emailError: AuthValidationMessage.NO_ERROR,
+        email: AuthValidationMessage.NO_ERROR,
       }));
       handleShowPasswordField();
     }
@@ -59,27 +63,27 @@ function useLoginForm() {
     if (!isEmailFilled(email)) {
       setFormErrors(previousErrors => ({
         ...previousErrors,
-        emailError: AuthValidationMessage.PROVIDE_EMAIL,
+        email: AuthValidationMessage.PROVIDE_EMAIL,
       }));
       return;
     }
 
     const { validationMessage: emailError } = event.target as HTMLInputElement;
-    setFormErrors(previousErrors => ({ ...previousErrors, emailError }));
+    setFormErrors(previousErrors => ({ ...previousErrors, email: emailError }));
   }
 
   function handleChangePassword(event: React.ChangeEvent) {
     const { value: password } = event.target as HTMLInputElement;
-    const { passwordError } = formErrors;
+    const { password: passwordError } = formErrors;
 
-    if (isProvideFieldsErrorExist(formErrors.passwordError)) {
+    if (isProvideFieldErrorExist(passwordError)) {
       handleResetErrors();
     }
 
     if (shouldRemoveMinLengthError(passwordError, password.length)) {
       setFormErrors(previousErrors => ({
         ...previousErrors,
-        passwordError: AuthValidationMessage.NO_ERROR,
+        password: AuthValidationMessage.NO_ERROR,
       }));
     }
 
@@ -92,20 +96,43 @@ function useLoginForm() {
     if (!isEnoughCharacters(password.length)) {
       setFormErrors(previousValues => ({
         ...previousValues,
-        passwordError: AuthValidationMessage.TOO_SHORT_PASSWORD,
+        password: AuthValidationMessage.TOO_SHORT_PASSWORD,
       }));
     }
   }
 
-  function handleFormSubmit() {
-    if (!isFormFilled<LoginFormValues>(formValues)) {
-      setFormErrors({
-        emailError: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-        passwordError: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-      });
+  function handleFormSubmit(
+    submitHandler: (payload: LoginRequestDto) => Promise<void>
+  ) {
+    return (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-      return;
-    }
+      const emptyFields = getEmptyFields<LoginRequestDto>(formValues);
+      if (emptyFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors<LoginFormErrors>(
+            previousErrors,
+            emptyFields
+          );
+        });
+
+        return;
+      }
+
+      const errorFields = getErrorFields<LoginFormErrors>(formErrors);
+      if (errorFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors<LoginFormErrors>(
+            previousErrors,
+            errorFields
+          );
+        });
+
+        return;
+      }
+
+      submitHandler(formValues);
+    };
   }
 
   return {

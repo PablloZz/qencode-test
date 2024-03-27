@@ -1,5 +1,5 @@
 type ForgotPasswordFormErrors = {
-  emailError: string;
+  email: string;
 };
 
 export { type ForgotPasswordFormErrors };

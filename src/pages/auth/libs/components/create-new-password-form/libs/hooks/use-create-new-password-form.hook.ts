@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   AuthValidationMessage,
+  getEmptyFields,
+  getErrorFields,
+  getUpdatedFormErrors,
   isEnoughCharacters,
-  isFormFilled,
-  isFormValid,
-  isProvideFieldsErrorExist,
+  isProvideFieldErrorExist,
   shouldRemoveMinLengthError,
 } from "~/pages/auth/auth.tsx";
-import { AppRoute } from "~/libs/enums/enums.ts";
+import { type SetNewPasswordRequestDto } from "~/packages/auth/auth.ts";
 import {
   type HandleUpdatePasswordTypeErrors,
   type CreateNewPasswordFormErrors,
@@ -25,7 +25,6 @@ import {
 import { CreateNewPasswordFormValidationMessage } from "../enums/enums.ts";
 
 function useCreateNewPasswordForm() {
-  const navigate = useNavigate();
   const [formValues, setFormValues] = useState<CreateNewPasswordFormValues>(
     INITIAL_CREATE_NEW_PASSWORD_FORM_VALUES
   );
@@ -35,8 +34,8 @@ function useCreateNewPasswordForm() {
 
   function handleResetErrors() {
     setFormErrors({
-      passwordError: AuthValidationMessage.NO_ERROR,
-      confirmPasswordError: AuthValidationMessage.NO_ERROR,
+      password: AuthValidationMessage.NO_ERROR,
+      confirmPassword: AuthValidationMessage.NO_ERROR,
     });
   }
 
@@ -49,11 +48,9 @@ function useCreateNewPasswordForm() {
     const currentFieldValue =
       passwordFieldType === "password" ? password : confirmPassword;
     const currentErrorFieldType: keyof CreateNewPasswordFormErrors =
-      passwordFieldType === "password"
-        ? "passwordError"
-        : "confirmPasswordError";
+      passwordFieldType === "password" ? "password" : "confirmPassword";
 
-    if (isProvideFieldsErrorExist(errorMessage)) {
+    if (isProvideFieldErrorExist(errorMessage)) {
       handleResetErrors();
     }
 
@@ -72,7 +69,7 @@ function useCreateNewPasswordForm() {
   function handleChangePassword(event: React.ChangeEvent) {
     const { value: password } = event.target as HTMLInputElement;
     const { confirmPassword } = formValues;
-    const { passwordError } = formErrors;
+    const { password: passwordError } = formErrors;
 
     handleUpdatePasswordTypeErrors({
       confirmPassword,
@@ -90,7 +87,7 @@ function useCreateNewPasswordForm() {
     if (!isEnoughCharacters(password.length)) {
       setFormErrors(previousValues => ({
         ...previousValues,
-        passwordError: AuthValidationMessage.TOO_SHORT_PASSWORD,
+        password: AuthValidationMessage.TOO_SHORT_PASSWORD,
       }));
 
       return;
@@ -98,9 +95,8 @@ function useCreateNewPasswordForm() {
 
     if (shouldSetMismatchError(password, confirmPassword)) {
       setFormErrors({
-        passwordError:
-          CreateNewPasswordFormValidationMessage.PASSWORDS_MISMATCH,
-        confirmPasswordError:
+        password: CreateNewPasswordFormValidationMessage.PASSWORDS_MISMATCH,
+        confirmPassword:
           CreateNewPasswordFormValidationMessage.PASSWORDS_MISMATCH,
       });
     }
@@ -109,7 +105,7 @@ function useCreateNewPasswordForm() {
   function handleChangeConfirmPassword(event: React.ChangeEvent) {
     const { value: confirmPassword } = event.target as HTMLInputElement;
     const { password } = formValues;
-    const { confirmPasswordError } = formErrors;
+    const { confirmPassword: confirmPasswordError } = formErrors;
 
     handleUpdatePasswordTypeErrors({
       confirmPassword,
@@ -127,7 +123,7 @@ function useCreateNewPasswordForm() {
     if (!isEnoughCharacters(confirmPassword.length)) {
       setFormErrors(previousValues => ({
         ...previousValues,
-        confirmPasswordError: AuthValidationMessage.TOO_SHORT_PASSWORD,
+        confirmPassword: AuthValidationMessage.TOO_SHORT_PASSWORD,
       }));
 
       return;
@@ -135,27 +131,44 @@ function useCreateNewPasswordForm() {
 
     if (shouldSetMismatchError(confirmPassword, password)) {
       setFormErrors({
-        passwordError:
-          CreateNewPasswordFormValidationMessage.PASSWORDS_MISMATCH,
-        confirmPasswordError:
+        password: CreateNewPasswordFormValidationMessage.PASSWORDS_MISMATCH,
+        confirmPassword:
           CreateNewPasswordFormValidationMessage.PASSWORDS_MISMATCH,
       });
     }
   }
 
-  function handleFormSubmit() {
-    if (!isFormFilled<CreateNewPasswordFormValues>(formValues)) {
-      setFormErrors({
-        passwordError: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-        confirmPasswordError: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-      });
+  function handleFormSubmit(
+    submitHandler: (payload: SetNewPasswordRequestDto) => void
+  ) {
+    return (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-      return;
-    }
+      const emptyFields =
+        getEmptyFields<CreateNewPasswordFormValues>(formValues);
+      if (emptyFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors<CreateNewPasswordFormErrors>(
+            previousErrors,
+            emptyFields
+          );
+        });
 
-    if (isFormValid<CreateNewPasswordFormErrors>(formErrors)) {
-      navigate(AppRoute.LOGIN);
-    }
+        return;
+      }
+
+      const errorFields =
+        getErrorFields<CreateNewPasswordFormErrors>(formErrors);
+      if (errorFields.length) {
+        setFormErrors(previousErrors => {
+          return getUpdatedFormErrors(previousErrors, errorFields);
+        });
+
+        return;
+      }
+
+      submitHandler({ password: formValues.password });
+    };
   }
 
   return {

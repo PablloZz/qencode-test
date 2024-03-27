@@ -6,6 +6,7 @@ type Properties = {
   variant?: ButtonVariant;
   label: React.ReactNode;
   type?: ButtonType;
+  loading?: boolean;
   className?: string;
   onClick?:
     | (() => void)
@@ -16,6 +17,7 @@ function Button({
   type = "button",
   label,
   className = "",
+  loading,
   onClick,
   variant = "primary",
 }: Properties) {
@@ -33,8 +35,9 @@ function Button({
         className
       )}
       onClick={onClick}
+      disabled={loading}
     >
-      {label}
+      {loading ? "Loading..." : label}
     </button>
   );
 }

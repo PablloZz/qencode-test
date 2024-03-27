@@ -2,16 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AuthValidationMessage,
+  getEmptyFields,
+  getErrorFields,
   isEmailFilled,
-  isFormFilled,
-  isFormValid,
   isValidEmail,
 } from "~/pages/auth/auth.tsx";
 import { AppRoute } from "~/libs/enums/enums.ts";
-import {
-  ForgotPasswordFormErrors,
-  ForgotPasswordFormValues,
-} from "../types/types.ts";
+import { type ForgotPasswordRequestDto } from "~/packages/auth/auth.ts";
+import { type ForgotPasswordFormErrors } from "../types/types.ts";
 import {
   INITIAL_FORGOT_PASSWORD_FORM_ERRORS,
   INITIAL_FORGOT_PASSWORD_FORM_VALUES,
@@ -19,7 +17,7 @@ import {
 
 function useForgotPasswordForm() {
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState<ForgotPasswordFormValues>(
+  const [formValues, setFormValues] = useState<ForgotPasswordRequestDto>(
     INITIAL_FORGOT_PASSWORD_FORM_VALUES
   );
   const [formErrors, setFormErrors] = useState<ForgotPasswordFormErrors>(
@@ -31,7 +29,7 @@ function useForgotPasswordForm() {
       event.target as HTMLInputElement;
 
     if (isValidEmail(validationMessage, email)) {
-      setFormErrors({ emailError: AuthValidationMessage.NO_ERROR });
+      setFormErrors({ email: AuthValidationMessage.NO_ERROR });
     }
 
     setFormValues({ email });
@@ -41,31 +39,44 @@ function useForgotPasswordForm() {
     const { email } = formValues;
 
     if (!isEmailFilled(email)) {
-      setFormErrors({ emailError: AuthValidationMessage.PROVIDE_EMAIL });
+      setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
       return;
     }
 
     const { validationMessage: emailError } = event.target as HTMLInputElement;
-    setFormErrors({ emailError });
+    setFormErrors({ email: emailError });
   }
 
-  function handleFormSubmit() {
-    if (!isFormFilled<ForgotPasswordFormValues>(formValues)) {
-      setFormErrors({ emailError: AuthValidationMessage.PROVIDE_EMAIL });
-      return;
-    }
+  function handleCancelResetPassword() {
+    navigate(AppRoute.LOGIN);
+  }
 
-    if (isFormValid<ForgotPasswordFormErrors>(formErrors)) {
-      navigate(AppRoute.CREATE_NEW_PASSWORD);
-    }
+  function handleFormSubmit(
+    submitHandler: (payload: ForgotPasswordRequestDto) => void
+  ) {
+    return (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      const emptyFields = getEmptyFields<ForgotPasswordRequestDto>(formValues);
+      if (emptyFields.length) {
+        setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
+        return;
+      }
+
+      const errorFields = getErrorFields<ForgotPasswordFormErrors>(formErrors);
+      if (!errorFields.length) {
+        submitHandler(formValues);
+      }
+    };
   }
 
   return {
     formValues,
     formErrors,
+    handleFormSubmit,
     handleChangeEmail,
     handleValidateEmail,
-    handleFormSubmit,
+    handleCancelResetPassword,
   };
 }
 

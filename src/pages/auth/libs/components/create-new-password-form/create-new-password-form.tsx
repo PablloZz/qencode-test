@@ -1,4 +1,5 @@
 import { Button, Input } from "~/libs/components/components.ts";
+import { useSetNewPassword } from "../../contexts/contexts.ts";
 import { useCreateNewPasswordForm } from "./libs/hooks/hooks.ts";
 import styles from "./styles.module.css";
 
@@ -12,16 +13,21 @@ function CreateNewPasswordForm() {
     handleValidateConfirmPassword,
     handleFormSubmit,
   } = useCreateNewPasswordForm();
+  const { loading, handleSetNewPassword } = useSetNewPassword();
 
   return (
-    <>
+    <form
+      onSubmit={handleFormSubmit(handleSetNewPassword)}
+      noValidate
+      className={styles.form}
+    >
       <h2 className={styles.title}>Create new Password?</h2>
       <Input
         type="password"
         name="password"
         placeholder="Password"
         value={formValues.password}
-        error={formErrors.passwordError}
+        error={formErrors.password}
         onChange={handleChangePassword}
         onBlur={handleValidatePassword}
         labelText="Password"
@@ -33,7 +39,7 @@ function CreateNewPasswordForm() {
         name="confirmPassword"
         placeholder="Password"
         value={formValues.confirmPassword}
-        error={formErrors.confirmPasswordError}
+        error={formErrors.confirmPassword}
         onChange={handleChangeConfirmPassword}
         onBlur={handleValidateConfirmPassword}
         labelText="Confirm Password"
@@ -41,12 +47,12 @@ function CreateNewPasswordForm() {
       />
       <Button
         label="Reset Password"
-        type="button"
+        type="submit"
         className={styles["reset-password-button"]}
         variant="primary"
-        onClick={handleFormSubmit}
+        loading={loading}
       />
-    </>
+    </form>
   );
 }
 
