@@ -19,6 +19,8 @@ function App() {
     if (currentTimestamp >= refreshTokenExpire) {
       window.localStorage.removeItem(StorageKey.TOKEN);
       window.localStorage.removeItem(StorageKey.REFRESH);
+      window.localStorage.removeItem(StorageKey.TOKEN_EXPIRE);
+      window.localStorage.removeItem(StorageKey.REFRESH_EXPIRE);
       return;
     }
 
