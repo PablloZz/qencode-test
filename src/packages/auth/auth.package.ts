@@ -81,6 +81,31 @@ class Auth extends HttpApi {
 
     return { detail };
   }
+
+  public async refreshToken(payload: string): Promise<LoginResponseDto> {
+    const response = await this.load(
+      this.getFullEndpoint(AuthApiPath.SET_NEW_PASSWORD),
+      {
+        method: "POST",
+        contentType: ContentType.JSON,
+        payload: JSON.stringify({ refresh_token: payload }),
+        hasAuth: false,
+      }
+    );
+    const {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      token_expire: tokenExpire,
+      refresh_token_expire: refreshTokenExpire,
+    } = await response.json();
+
+    return {
+      accessToken,
+      refreshToken,
+      tokenExpire,
+      refreshTokenExpire,
+    };
+  }
 }
 
 export { Auth };

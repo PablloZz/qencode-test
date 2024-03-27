@@ -1,0 +1,3 @@
+const DEFAULT_EXPIRE_TIME = 0;
+
+export { DEFAULT_EXPIRE_TIME };
