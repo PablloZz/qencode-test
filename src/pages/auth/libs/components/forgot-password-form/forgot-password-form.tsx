@@ -4,12 +4,21 @@ import { useForgotPassword } from "../../contexts/contexts.ts";
 import styles from "./styles.module.css";
 
 function ForgotPasswordForm() {
-  const { formValues, formErrors, handleChangeEmail, handleValidateEmail } =
-    useForgotPasswordForm();
-  const { loading } = useForgotPassword();
+  const {
+    formValues,
+    formErrors,
+    handleFormSubmit,
+    handleChangeEmail,
+    handleValidateEmail,
+  } = useForgotPasswordForm();
+  const { loading, handleResetPassword } = useForgotPassword();
 
   return (
-    <form className={styles.form}>
+    <form
+      onSubmit={handleFormSubmit(handleResetPassword)}
+      noValidate
+      className={styles.form}
+    >
       <h2 className={styles.title}>Forgot Password?</h2>
       <Input
         type="email"

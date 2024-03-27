@@ -47,23 +47,30 @@ function useForgotPasswordForm() {
     setFormErrors({ email: emailError });
   }
 
-  function handleFormSubmit() {
-    if (!isFormFilled<ForgotPasswordRequestDto>(formValues)) {
-      setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
-      return;
-    }
+  function handleFormSubmit(
+    submitHandler: (payload: ForgotPasswordRequestDto) => void
+  ) {
+    return (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-    if (isFormValid<ForgotPasswordFormErrors>(formErrors)) {
-      navigate(AppRoute.CREATE_NEW_PASSWORD);
-    }
+      if (!isFormFilled<ForgotPasswordRequestDto>(formValues)) {
+        setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
+        return;
+      }
+
+      if (isFormValid<ForgotPasswordFormErrors>(formErrors)) {
+        submitHandler(formValues);
+        navigate(AppRoute.CREATE_NEW_PASSWORD);
+      }
+    };
   }
 
   return {
     formValues,
     formErrors,
+    handleFormSubmit,
     handleChangeEmail,
     handleValidateEmail,
-    handleFormSubmit,
   };
 }
 

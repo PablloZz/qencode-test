@@ -16,11 +16,16 @@ function LoginForm() {
     handleValidateEmail,
     handleChangePassword,
     handleValidatePassword,
+    handleFormSubmit,
   } = useLoginForm();
-  const { loading } = useLogin();
+  const { loading, handleLogin } = useLogin();
 
   return (
-    <form className={styles.form}>
+    <form
+      onSubmit={handleFormSubmit(handleLogin)}
+      noValidate
+      className={styles.form}
+    >
       <h2 className={styles.title}>Log in to your account</h2>
       <div className={styles["auth-buttons"]}>
         <button className={styles["auth-button"]}>

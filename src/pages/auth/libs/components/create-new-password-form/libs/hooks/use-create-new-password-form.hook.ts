@@ -23,9 +23,10 @@ import {
   shouldSetMismatchError,
 } from "../helpers/helpers.ts";
 import { CreateNewPasswordFormValidationMessage } from "../enums/enums.ts";
+import { type SetNewPasswordRequestDto } from "~/packages/auth/auth.ts";
 
 function useCreateNewPasswordForm() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState<CreateNewPasswordFormValues>(
     INITIAL_CREATE_NEW_PASSWORD_FORM_VALUES
   );
@@ -139,19 +140,26 @@ function useCreateNewPasswordForm() {
     }
   }
 
-  function handleFormSubmit() {
-    if (!isFormFilled<CreateNewPasswordFormValues>(formValues)) {
-      setFormErrors({
-        password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-        confirmPassword: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-      });
+  function handleFormSubmit(
+    submitHandler: (payload: SetNewPasswordRequestDto) => void
+  ) {
+    return (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-      return;
-    }
+      if (!isFormFilled<CreateNewPasswordFormValues>(formValues)) {
+        setFormErrors({
+          password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+          confirmPassword: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+        });
 
-    if (isFormValid<CreateNewPasswordFormErrors>(formErrors)) {
-      navigate(AppRoute.LOGIN);
-    }
+        return;
+      }
+
+      if (isFormValid<CreateNewPasswordFormErrors>(formErrors)) {
+        navigate(AppRoute.LOGIN);
+        submitHandler({ password: formValues.password });
+      }
+    };
   }
 
   return {

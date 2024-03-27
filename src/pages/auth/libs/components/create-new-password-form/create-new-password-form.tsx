@@ -11,11 +11,16 @@ function CreateNewPasswordForm() {
     handleValidatePassword,
     handleChangeConfirmPassword,
     handleValidateConfirmPassword,
+    handleFormSubmit,
   } = useCreateNewPasswordForm();
-  const { loading } = useSetNewPassword();
+  const { loading, handleSetNewPassword } = useSetNewPassword();
 
   return (
-    <form className={styles.form}>
+    <form
+      onSubmit={handleFormSubmit(handleSetNewPassword)}
+      noValidate
+      className={styles.form}
+    >
       <h2 className={styles.title}>Create new Password?</h2>
       <Input
         type="password"

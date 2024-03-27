@@ -99,15 +99,23 @@ function useLoginForm() {
     }
   }
 
-  function handleFormSubmit() {
-    if (!isFormFilled<LoginRequestDto>(formValues)) {
-      setFormErrors({
-        email: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-        password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-      });
+  function handleFormSubmit(
+    submitHandler: (payload: LoginRequestDto) => Promise<void>
+  ) {
+    return (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-      return;
-    }
+      if (!isFormFilled<LoginRequestDto>(formValues)) {
+        setFormErrors({
+          email: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+          password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+        });
+
+        return;
+      }
+
+      submitHandler(formValues);
+    };
   }
 
   return {
