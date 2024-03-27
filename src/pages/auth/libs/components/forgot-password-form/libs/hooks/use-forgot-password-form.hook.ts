@@ -47,6 +47,10 @@ function useForgotPasswordForm() {
     setFormErrors({ email: emailError });
   }
 
+  function handleCancelResetPassword() {
+    navigate(AppRoute.LOGIN);
+  }
+
   function handleFormSubmit(
     submitHandler: (payload: ForgotPasswordRequestDto) => void
   ) {
@@ -71,6 +75,7 @@ function useForgotPasswordForm() {
     handleFormSubmit,
     handleChangeEmail,
     handleValidateEmail,
+    handleCancelResetPassword,
   };
 }
 

@@ -10,6 +10,7 @@ function ForgotPasswordForm() {
     handleFormSubmit,
     handleChangeEmail,
     handleValidateEmail,
+    handleCancelResetPassword,
   } = useForgotPasswordForm();
   const { loading, handleResetPassword } = useForgotPassword();
 
@@ -38,7 +39,12 @@ function ForgotPasswordForm() {
         variant="primary"
         loading={loading}
       />
-      <Button label="Cancel" type="button" variant="outlined" />
+      <Button
+        label="Cancel"
+        type="button"
+        variant="outlined"
+        onClick={handleCancelResetPassword}
+      />
     </form>
   );
 }
