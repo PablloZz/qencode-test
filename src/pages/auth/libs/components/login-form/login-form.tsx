@@ -48,7 +48,7 @@ function LoginForm() {
         name="email"
         placeholder="Work Email"
         value={formValues.email}
-        error={formErrors.emailError}
+        error={formErrors.email}
         onChange={handleChangeEmail}
         onBlur={handleValidateEmail}
         labelText="Work Email"
@@ -61,7 +61,7 @@ function LoginForm() {
             name="password"
             placeholder="Password"
             value={formValues.password}
-            error={formErrors.passwordError}
+            error={formErrors.password}
             onChange={handleChangePassword}
             onBlur={handleValidatePassword}
             labelText="Password"

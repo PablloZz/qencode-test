@@ -29,23 +29,24 @@ function useLoginForm() {
 
   function handleResetErrors() {
     setFormErrors({
-      emailError: AuthValidationMessage.NO_ERROR,
-      passwordError: AuthValidationMessage.NO_ERROR,
+      email: AuthValidationMessage.NO_ERROR,
+      password: AuthValidationMessage.NO_ERROR,
     });
   }
 
   function handleChangeEmail(event: React.ChangeEvent) {
     const { value: email, validationMessage } =
       event.target as HTMLInputElement;
+    const { email: emailError } = formErrors;
 
-    if (isProvideFieldsErrorExist(formErrors.emailError)) {
+    if (isProvideFieldsErrorExist(emailError)) {
       handleResetErrors();
     }
 
     if (isValidEmail(validationMessage, email)) {
       setFormErrors(previousErrors => ({
         ...previousErrors,
-        emailError: AuthValidationMessage.NO_ERROR,
+        email: AuthValidationMessage.NO_ERROR,
       }));
       handleShowPasswordField();
     }
@@ -59,27 +60,27 @@ function useLoginForm() {
     if (!isEmailFilled(email)) {
       setFormErrors(previousErrors => ({
         ...previousErrors,
-        emailError: AuthValidationMessage.PROVIDE_EMAIL,
+        email: AuthValidationMessage.PROVIDE_EMAIL,
       }));
       return;
     }
 
     const { validationMessage: emailError } = event.target as HTMLInputElement;
-    setFormErrors(previousErrors => ({ ...previousErrors, emailError }));
+    setFormErrors(previousErrors => ({ ...previousErrors, email: emailError }));
   }
 
   function handleChangePassword(event: React.ChangeEvent) {
     const { value: password } = event.target as HTMLInputElement;
-    const { passwordError } = formErrors;
+    const { password: passwordError } = formErrors;
 
-    if (isProvideFieldsErrorExist(formErrors.passwordError)) {
+    if (isProvideFieldsErrorExist(passwordError)) {
       handleResetErrors();
     }
 
     if (shouldRemoveMinLengthError(passwordError, password.length)) {
       setFormErrors(previousErrors => ({
         ...previousErrors,
-        passwordError: AuthValidationMessage.NO_ERROR,
+        password: AuthValidationMessage.NO_ERROR,
       }));
     }
 
@@ -92,7 +93,7 @@ function useLoginForm() {
     if (!isEnoughCharacters(password.length)) {
       setFormErrors(previousValues => ({
         ...previousValues,
-        passwordError: AuthValidationMessage.TOO_SHORT_PASSWORD,
+        password: AuthValidationMessage.TOO_SHORT_PASSWORD,
       }));
     }
   }
@@ -100,8 +101,8 @@ function useLoginForm() {
   function handleFormSubmit() {
     if (!isFormFilled<LoginFormValues>(formValues)) {
       setFormErrors({
-        emailError: AuthValidationMessage.PROVIDE_ALL_FIELDS,
-        passwordError: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+        email: AuthValidationMessage.PROVIDE_ALL_FIELDS,
+        password: AuthValidationMessage.PROVIDE_ALL_FIELDS,
       });
 
       return;

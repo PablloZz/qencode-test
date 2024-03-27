@@ -14,7 +14,7 @@ function ForgotPasswordForm() {
         name="email"
         placeholder="Enter your email"
         value={formValues.email}
-        error={formErrors.emailError}
+        error={formErrors.email}
         onChange={handleChangeEmail}
         onBlur={handleValidateEmail}
         labelText="Email"

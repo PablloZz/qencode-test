@@ -1,6 +1,6 @@
 type LoginFormErrors = {
-  emailError: string;
-  passwordError: string;
+  email: string;
+  password: string;
 };
 
 export { type LoginFormErrors };

@@ -20,7 +20,7 @@ function CreateNewPasswordForm() {
         name="password"
         placeholder="Password"
         value={formValues.password}
-        error={formErrors.passwordError}
+        error={formErrors.password}
         onChange={handleChangePassword}
         onBlur={handleValidatePassword}
         labelText="Password"
@@ -32,7 +32,7 @@ function CreateNewPasswordForm() {
         name="confirmPassword"
         placeholder="Password"
         value={formValues.confirmPassword}
-        error={formErrors.confirmPasswordError}
+        error={formErrors.confirmPassword}
         onChange={handleChangeConfirmPassword}
         onBlur={handleValidateConfirmPassword}
         labelText="Confirm Password"

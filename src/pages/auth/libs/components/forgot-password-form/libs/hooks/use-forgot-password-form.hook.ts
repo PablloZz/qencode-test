@@ -31,7 +31,7 @@ function useForgotPasswordForm() {
       event.target as HTMLInputElement;
 
     if (isValidEmail(validationMessage, email)) {
-      setFormErrors({ emailError: AuthValidationMessage.NO_ERROR });
+      setFormErrors({ email: AuthValidationMessage.NO_ERROR });
     }
 
     setFormValues({ email });
@@ -41,17 +41,17 @@ function useForgotPasswordForm() {
     const { email } = formValues;
 
     if (!isEmailFilled(email)) {
-      setFormErrors({ emailError: AuthValidationMessage.PROVIDE_EMAIL });
+      setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
       return;
     }
 
     const { validationMessage: emailError } = event.target as HTMLInputElement;
-    setFormErrors({ emailError });
+    setFormErrors({ email: emailError });
   }
 
   function handleFormSubmit() {
     if (!isFormFilled<ForgotPasswordFormValues>(formValues)) {
-      setFormErrors({ emailError: AuthValidationMessage.PROVIDE_EMAIL });
+      setFormErrors({ email: AuthValidationMessage.PROVIDE_EMAIL });
       return;
     }
 
